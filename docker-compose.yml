@@ -1,0 +1,68 @@
+version: "3.8"
+
+#Define services
+services:
+
+  #PostgreSQL Database for the application
+  online_shop_user_db:
+    image: postgres
+    container_name: postgres
+    #Volume mounted for database for the storage
+    volumes:
+      - online-shop-data:/var/lib/postgresql/data
+    restart: always
+    environment:
+      #Environment variable for DB name, user and password
+      - POSTGRES_DATABASE=online_shop_user_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=7722
+    ports:
+      - "5432:5432"   # Forward the exposed port 5432 on the container to port 5432 on the host machine
+    expose:
+      - "5432"
+#    networks:
+#      - bookstore-app-network
+
+  #Back-end Consul discovery server
+  consul-discovery:
+    hostname: consul-discovery
+    image: consul
+    container_name: consul-discovery
+    restart: always
+    ports:
+      - "8761:8761"
+#    networks:
+#      - online-shop-network
+
+  #Back-end account-service
+  account-service:
+    #The docker file in account-service build the jar and provides the docker image with the following name.
+    build:
+      context: ./account-service
+      args:
+        JAR_FILE: account-service-0.0.1-SNAPSHOT.jar
+      dockerfile: Dockerfile
+    image: account-service
+    container_name: account-service
+    hostname: account-service
+
+    # Forward the exposed port 8081 on the container to port 8081 on the host machine
+    ports:
+      - "8081:8081"
+    environment:
+      - SERVER_PORT=8081
+      - DB_SERVER=postgres
+      - POSTGRES_DATABASE=online_shop_user_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=7722
+#    networks:
+#      - online-shop-network
+    links:
+      - online_shop_user_db
+
+#Volumes for DB data
+volumes:
+  online-shop-data:
+
+
+

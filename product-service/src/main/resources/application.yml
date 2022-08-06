@@ -1,0 +1,49 @@
+server:
+  port: 8082
+
+
+spring:
+  application:
+    name: PRODUCT-SERVICE
+
+  datasource:
+    username: postgres
+    password: 7722
+    url: jdbc:postgresql://localhost:5432/online_shop_user_db?currentSchema=online_shop_users_db
+    driver-class-name: org.postgresql.Driver
+
+
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        use_sql_comments: true
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health: always
+
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.uuid}
+    lease-renewal-interval-in-seconds: 30
+
+
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui
