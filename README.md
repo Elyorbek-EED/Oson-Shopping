@@ -22,13 +22,11 @@ Run mvn clean install at root of project to build all the microservices jars.
 
 Run docker-compose up --build to start all the containers.
 
-Use the Postman Api collection in the Postman directory. To make request to various services.
-
 Services will be exposed in this ports
 
->Api Gateway Service       : 8765
- Eureka Discovery Service  : 8761
- Consul Discovery          : 8500
+   - Api Gateway Service       : 9091
+   - Eureka Discovery Service  : 9092
+   - Consul Discovery          : 9093
 
 ## Requiremenent
 
@@ -36,20 +34,16 @@ Services will be exposed in this ports
 
 - order-service
   - hostname: ORDER-SERVICE
-  - Ports: 18383:8383
   - URL: http://localhost:8083
   
 - account-service
   - hostname: ACCOUNT-SERVICE
-  - Ports: 18383:8383
   - URL: http://localhost:8081
   
 - billing-service
   - hostname: BILLING-SERVICE
-  - Ports: 18383:8383
   - URL: http://localhost:8084  
   
 - product-service
   - hostname: PRODUCT-SERVICE
-  - Ports: 18383:8383
   - URL: http://localhost:8082  
