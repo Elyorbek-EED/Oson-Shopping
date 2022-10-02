@@ -39,6 +39,9 @@ public class ShippingServiceImpl extends AbstractService<ShippingRepository, Shi
     public ResponseEntity<DataDTO<ShippingDTO>> ShippingServiceForTest(Integer id) {
         return null;
     }
+    public ResponseEntity<DataDTO<ShippingDTO>> newTestService(Integer id) {
+        return null;
+    }
 
     @Override
     public ResponseEntity<DataDTO<Void>> delete(Integer id) {
